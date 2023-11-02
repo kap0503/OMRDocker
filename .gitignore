@@ -3,4 +3,8 @@
 /SEAL/*
 /PalisadeError.txt
 /try.txt
-
+/runmewindows.sh
+/build
+/include
+/lib
+/swap_fix.sh
