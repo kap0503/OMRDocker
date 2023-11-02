@@ -29,11 +29,12 @@ ENV SEEL=${LIBDIR}/SEAL
 ENV OMR=${LIBDIR}/ObliviousMessageRetrieval
 ## PALISADE STUFF HERE
 RUN git clone -b v1.11.3 https://gitlab.com/palisade/palisade-release
+RUN mkdir build 
+WORKDIR $PAL/build
+RUN cmake .. -DCMAKE_INSTALL_PREFIX=$LIBDIR  
 WORKDIR $LIBDIR/palisade-release/third-party/google-benchmark/src
 RUN sed -i '2a #include<limits>' $LIBDIR/palisade-release/third-party/google-benchmark/src/benchmark_register.h
-RUN mkdir build 
-WORKDIR $PAL
-RUN cmake .. -DCMAKE_INSTALL_PREFIX=$LIBDIR   
+WORKDIR $PAL/build
 RUN make -j 
 RUN make install
 
@@ -41,21 +42,21 @@ RUN make install
 WORKDIR /home/user/omr/
 
 RUN git clone -b 3.6.6 https://github.com/microsoft/SEAL 
-WORKDIR ${SEEL}
+WORKDIR ${SEEL}/build
 
-RUN cmake -S . -B build -DCMAKE_INSTALL_PREFIX=$LIBDIR -DSEAL_USE_INTEL_HEXL=OFF && \   
+RUN cmake -S . -B build -DCMAKE_INSTALL_PREFIX=$SEEL -DSEAL_USE_INTEL_HEXL=OFF && \   
     cmake --build build && \
     cmake --install build
 
 WORKDIR /home/user/omr/
 
 RUN git clone https://github.com/ZeyuThomasLiu/ObliviousMessageRetrieval 
-WORKDIR ${OMR}}
+WORKDIR ${OMR}
 RUN mkdir build 
 WORKDIR ${OMR}/build 
 RUN mkdir ../data && \       
 mkdir ../data/payloads && \ 
 mkdir ../data/clues && \
-cmake .. -DCMAKE_PREFIX_PATH=$LIBDIR && \
+cmake .. -DCMAKE_PREFIX_PATH=$OMR && \
 make && \
 ./OMRdemos
