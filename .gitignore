@@ -3,4 +3,8 @@
 /SEAL/*
 /PalisadeError.txt
 /try.txt
-
+/omr.sif
+/swap_fix.sh
+/include/*
+/lib/*
+/build/*
