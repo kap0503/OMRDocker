@@ -1,17 +1,24 @@
-LIBDIR=/home/user/omr
-cd /home/user/omr/palisade-release
+LIBDIR=/home/prabhu21/OMR/OMRDocker
+PAL=${LIBDIR}/palisade-release
+SEEL=${LIBDIR}/SEAL
+OMR=${LIBDIR}/ObliviousMessageRetrieval
+
+cd ${PAL}
 mkdir build 
-cd build 
-cmake .. -DCMAKE_INSTALL_PREFIX=$LIBDIR   
+cd $PAL/build
+cmake .. -DCMAKE_INSTALL_PREFIX=$LIBDIR  
+cd $LIBDIR/palisade-release/third-party/google-benchmark/src
+sed -i '2a #include<limits>' $LIBDIR/palisade-release/third-party/google-benchmark/src/benchmark_register.h
+cd $PAL/build
 make -j 
 make install
 
-cd /home/user/omr/SEAL
+cd ${SEEL}
 cmake -S . -B build -DCMAKE_INSTALL_PREFIX=$LIBDIR -DSEAL_USE_INTEL_HEXL=OFF 
 cmake --build build 
 cmake --install build
 
-cd /home/user/omr/ObliviousMessageRetrieval/
+cd ${OMR}
 mkdir build 
 cd build 
 mkdir ../data       
