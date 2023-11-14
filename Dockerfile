@@ -21,5 +21,4 @@ RUN apt-get -y install autoconf && \
     apt-get -y install libgmp3-dev &&\
     apt-get -y install libntl-dev
 
-WORKDIR /home/user/omr
 
