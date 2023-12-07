@@ -44,7 +44,7 @@ WORKDIR /home/user/omr/
 RUN git clone -b 3.6.6 https://github.com/microsoft/SEAL 
 WORKDIR ${SEEL}/build
 
-RUN cmake -S . -B build -DCMAKE_INSTALL_PREFIX=$SEEL -DSEAL_USE_INTEL_HEXL=OFF && \   
+RUN cmake -S . -B build -DCMAKE_INSTALL_PREFIX=$LIBDIR -DSEAL_USE_INTEL_HEXL=OFF && \   
     cmake --build build && \
     cmake --install build
 
@@ -57,6 +57,6 @@ WORKDIR ${OMR}/build
 RUN mkdir ../data && \       
 mkdir ../data/payloads && \ 
 mkdir ../data/clues && \
-cmake .. -DCMAKE_PREFIX_PATH=$OMR && \
+cmake .. -DCMAKE_PREFIX_PATH=$LIBDIR && \
 make && \
 ./OMRdemos
